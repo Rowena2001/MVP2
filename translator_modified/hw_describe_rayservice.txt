@@ -1,0 +1,154 @@
+Name:         rayservice-sample
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  ray.io/v1alpha1
+Kind:         RayService
+Metadata:
+  Creation Timestamp:  2023-06-09T21:50:08Z
+  Generation:          1
+  Resource Version:    39283
+  UID:                 cb6dc0a6-fc23-4b2a-986d-d9170235ae47
+Spec:
+  Deployment Unhealthy Second Threshold:  300
+  Ray Cluster Config:
+    Head Group Spec:
+      Ray Start Params:
+        Block:             true
+        Dashboard - Host:  0.0.0.0
+        Num - Cpus:        2
+        Port:              6379
+      Service Type:        ClusterIP
+      Template:
+        Spec:
+          Containers:
+            Image:  rayproject/ray:2.3.0
+            Name:   ray-head
+            Ports:
+              Container Port:  6379
+              Name:            gcs-server
+              Protocol:        TCP
+              Container Port:  8265
+              Name:            dashboard
+              Protocol:        TCP
+              Container Port:  10001
+              Name:            client
+              Protocol:        TCP
+              Container Port:  8000
+              Name:            serve
+              Protocol:        TCP
+            Resources:
+              Limits:
+                Cpu:     2
+                Memory:  2Gi
+              Requests:
+                Cpu:     2
+                Memory:  2Gi
+          Tolerations:
+            Effect:    NoSchedule
+            Key:       sku
+            Operator:  Equal
+            Value:     gpu
+    Head Service Annotations:
+    Ray Version:  2.3.0
+    Worker Group Specs:
+      Group Name:    small-group
+      Max Replicas:  5
+      Min Replicas:  1
+      Ray Start Params:
+        Block:   true
+      Replicas:  1
+      Template:
+        Spec:
+          Containers:
+            Image:  rayproject/ray:2.3.0
+            Lifecycle:
+              Pre Stop:
+                Exec:
+                  Command:
+                    /bin/sh
+                    -c
+                    ray stop
+            Name:  ray-worker
+            Resources:
+              Limits:
+                Cpu:     2
+                Memory:  2Gi
+              Requests:
+                Cpu:     2
+                Memory:  2Gi
+          Init Containers:
+            Command:
+              sh
+              -c
+              until nslookup $RAY_IP.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for K8s Service $RAY_IP; sleep 2; done
+            Image:  busybox:1.28
+            Name:   init
+          Tolerations:
+            Effect:    NoSchedule
+            Key:       sku
+            Operator:  Equal
+            Value:     gpu
+  Serve Config:
+    Deployments:
+      Name:          f
+      Num Replicas:  1
+      Ray Actor Options:
+        Num Cpus:    0.1
+      Name:          BasicDriver
+      Num Replicas:  1
+      Ray Actor Options:
+        Num Cpus:  0.1
+    Import Path:   helloworld.DagNode
+    Runtime Env:   working_dir: "https://github.com/Rowena2001/test_dag/archive/refs/tags/1.4.zip"
+
+  Service Unhealthy Second Threshold:  300
+Status:
+  Active Service Status:
+    App Status:
+      Health Last Update Time:  2023-06-09T23:34:03Z
+      Last Update Time:         2023-06-09T23:34:03Z
+      Status:                   RUNNING
+    Dashboard Status:
+      Health Last Update Time:  2023-06-09T23:34:03Z
+      Is Healthy:               true
+      Last Update Time:         2023-06-09T23:34:03Z
+    Ray Cluster Name:           rayservice-sample-raycluster-f5jfd
+    Ray Cluster Status:
+      Available Worker Replicas:  1
+      Desired Worker Replicas:    1
+      Endpoints:
+        Client:             10001
+        Dashboard:          8265
+        Dashboard - Agent:  52365
+        Gcs - Server:       6379
+        Metrics:            8080
+        Serve:              8000
+      Head:
+        Pod IP:             10.244.0.8
+        Service IP:         10.96.17.134
+      Last Update Time:     2023-06-09T23:33:56Z
+      Max Worker Replicas:  5
+      Min Worker Replicas:  1
+      Observed Generation:  1
+      State:                ready
+    Serve Deployment Statuses:
+      Health Last Update Time:  2023-06-09T23:34:03Z
+      Last Update Time:         2023-06-09T23:34:03Z
+      Name:                     f
+      Status:                   HEALTHY
+      Health Last Update Time:  2023-06-09T23:34:03Z
+      Last Update Time:         2023-06-09T23:34:03Z
+      Name:                     BasicDriver
+      Status:                   HEALTHY
+  Observed Generation:          1
+  Pending Service Status:
+    App Status:
+    Dashboard Status:
+    Ray Cluster Status:
+      Head:
+  Service Status:  Running
+Events:
+  Type    Reason   Age                       From                   Message
+  ----    ------   ----                      ----                   -------
+  Normal  Running  3m53s (x14334 over 103m)  rayservice-controller  The Serve applicaton is now running and healthy.

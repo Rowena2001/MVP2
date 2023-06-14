@@ -1,0 +1,140 @@
+Name:         rayservice-sample
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  ray.io/v1alpha1
+Kind:         RayService
+Metadata:
+  Creation Timestamp:  2023-06-13T18:08:34Z
+  Generation:          1
+  Resource Version:    18136
+  UID:                 a7570db6-ac1d-469f-9848-5eb8365c2161
+Spec:
+  Deployment Unhealthy Second Threshold:  300
+  Ray Cluster Config:
+    Head Group Spec:
+      Ray Start Params:
+        Block:             true
+        Dashboard - Host:  0.0.0.0
+        Num - Cpus:        2
+        Port:              6379
+      Service Type:        ClusterIP
+      Template:
+        Spec:
+          Containers:
+            Image:  rayproject/ray:2.3.0
+            Name:   ray-head
+            Ports:
+              Container Port:  6379
+              Name:            gcs-server
+              Protocol:        TCP
+              Container Port:  8265
+              Name:            dashboard
+              Protocol:        TCP
+              Container Port:  10001
+              Name:            client
+              Protocol:        TCP
+              Container Port:  8000
+              Name:            serve
+              Protocol:        TCP
+            Resources:
+              Limits:
+                Cpu:     2
+                Memory:  64Gi
+              Requests:
+                Cpu:     100m
+                Memory:  512Mi
+    Head Service Annotations:
+    Ray Version:  2.3.0
+    Worker Group Specs:
+      Group Name:    small-group
+      Max Replicas:  5
+      Min Replicas:  1
+      Ray Start Params:
+        Block:   true
+      Replicas:  1
+      Template:
+        Spec:
+          Containers:
+            Image:  rayproject/ray:2.3.0
+            Lifecycle:
+              Pre Stop:
+                Exec:
+                  Command:
+                    /bin/sh
+                    -c
+                    ray stop
+            Name:  ray-worker
+            Resources:
+              Limits:
+                Cpu:     2
+                Memory:  64Gi
+              Requests:
+                Cpu:     100m
+                Memory:  1Gi
+          Init Containers:
+            Command:
+              sh
+              -c
+              until nslookup $RAY_IP.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for K8s Service $RAY_IP; sleep 2; done
+            Image:  busybox:1.28
+            Name:   init
+  Serve Config:
+    Deployments:
+      Name:          Translator
+      Num Replicas:  1
+      Ray Actor Options:
+        Num Cpus:    1
+      Name:          BasicDriver
+      Num Replicas:  1
+      Ray Actor Options:
+        Num Cpus:    0.1
+      Route Prefix:  /
+    Import Path:     serve_deployment.DagNode
+    Runtime Env:     working_dir: "https://github.com/Rowena2001/test_dag/archive/refs/tags/1.4.zip"
+
+  Service Unhealthy Second Threshold:  300
+Status:
+  Active Service Status:
+    App Status:
+    Dashboard Status:
+    Ray Cluster Status:
+      Available Worker Replicas:  1
+      Desired Worker Replicas:    1
+      Endpoints:
+        Client:             10001
+        Dashboard:          8265
+        Dashboard - Agent:  52365
+        Gcs - Server:       6379
+        Metrics:            8080
+        Serve:              8000
+      Head:
+        Pod IP:             10.244.0.52
+        Service IP:         10.96.151.63
+      Last Update Time:     2023-06-13T18:19:27Z
+      Max Worker Replicas:  5
+      Min Worker Replicas:  1
+      Observed Generation:  1
+      State:                ready
+  Observed Generation:      1
+  Pending Service Status:
+    App Status:
+      Health Last Update Time:  2023-06-13T18:19:33Z
+      Last Update Time:         2023-06-13T18:22:18Z
+      Status:                   DEPLOYING
+    Dashboard Status:
+      Health Last Update Time:  2023-06-13T18:22:18Z
+      Is Healthy:               true
+      Last Update Time:         2023-06-13T18:22:18Z
+    Ray Cluster Name:           rayservice-sample-raycluster-x4kq8
+    Ray Cluster Status:
+      Head:
+  Service Status:  WaitForServeDeploymentReady
+Events:
+  Type    Reason                       Age                     From                   Message
+  ----    ------                       ----                    ----                   -------
+  Normal  WaitForDashboard             13m (x2 over 13m)       rayservice-controller  Service "rayservice-sample-raycluster-h882l-dashboard-svc" not found
+  Normal  WaitForServeDeploymentReady  13m (x4 over 13m)       rayservice-controller  Put "http://rayservice-sample-raycluster-h882l-dashboard-svc.default.svc.cluster.local:52365/api/serve/deployments/": dial tcp 10.96.186.57:52365: connect: connection refused
+  Normal  ServiceNotReady              13m (x9 over 13m)       rayservice-controller  The service is not ready yet. Controller will perform a round of actions in 2s.
+  Normal  SubmittedServeDeployment     8m29s (x146 over 13m)   rayservice-controller  Controller sent API request to update Serve deployments on cluster rayservice-sample-raycluster-h882l
+  Normal  SubmittedServeDeployment     3m28s (x138 over 8m4s)  rayservice-controller  Controller sent API request to update Serve deployments on cluster rayservice-sample-raycluster-jtv9c
