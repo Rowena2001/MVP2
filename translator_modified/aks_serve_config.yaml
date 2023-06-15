@@ -19,6 +19,7 @@ spec:
         numReplicas: 1
         rayActorOptions:
           numCpus: 0.2
+          # numGpus: 0.2
       - name: BasicDriver
         numReplicas: 1
         routePrefix: "/"
@@ -44,7 +45,8 @@ spec:
               image: rayproject/ray:2.3.0
               resources:
                 limits:
-                  cpu: 2
+                  cpu: 4
+                  # gpu: 1
                   memory: 2Gi
                 requests:
                   cpu: 100m
@@ -89,6 +91,7 @@ spec:
                 resources:
                   limits:
                     cpu: "2"
+                    # gpu: "1"
                     memory: "2Gi"
                   requests:
                     cpu: "100m"
