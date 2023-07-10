@@ -1,0 +1,112 @@
+Name:               aks-gpuv100-30084787-vmss000000
+Roles:              agent
+Labels:             accelerator=nvidia
+                    agentpool=gpuv100
+                    beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/instance-type=Standard_ND40rs_v2
+                    beta.kubernetes.io/os=linux
+                    failure-domain.beta.kubernetes.io/region=eastus
+                    failure-domain.beta.kubernetes.io/zone=0
+                    gputype=v100
+                    kubernetes.azure.com/accelerator=nvidia
+                    kubernetes.azure.com/agentpool=gpuv100
+                    kubernetes.azure.com/cluster=MC_aprg-bl2p-indexservedlmodelserve-prod-bl2p_dlisv100aks_eastu
+                    kubernetes.azure.com/kubelet-identity-client-id=4728af24-a993-424e-bfa3-9ebd781a3a7d
+                    kubernetes.azure.com/mode=user
+                    kubernetes.azure.com/node-image-version=AKSUbuntu-1804gen2gpucontainerd-2022.07.04
+                    kubernetes.azure.com/os-sku=Ubuntu
+                    kubernetes.azure.com/role=agent
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=aks-gpuv100-30084787-vmss000000
+                    kubernetes.io/os=linux
+                    kubernetes.io/role=agent
+                    node-role.kubernetes.io/agent=
+                    node.kubernetes.io/instance-type=Standard_ND40rs_v2
+                    nodetype=gpu
+                    topology.disk.csi.azure.com/zone=
+                    topology.kubernetes.io/region=eastus
+                    topology.kubernetes.io/zone=0
+Annotations:        csi.volume.kubernetes.io/nodeid:
+                      {"disk.csi.azure.com":"aks-gpuv100-30084787-vmss000000","file.csi.azure.com":"aks-gpuv100-30084787-vmss000000"}
+                    node.alpha.kubernetes.io/ttl: 0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Fri, 22 Jul 2022 06:37:05 +0000
+Taints:             sku=gpu:NoSchedule
+Unschedulable:      false
+Lease:
+  HolderIdentity:  aks-gpuv100-30084787-vmss000000
+  AcquireTime:     <unset>
+  RenewTime:       Tue, 20 Jun 2023 16:42:15 +0000
+Conditions:
+  Type                          Status  LastHeartbeatTime                 LastTransitionTime                Reason                          Message
+  ----                          ------  -----------------                 ------------------                ------                          -------
+  ContainerRuntimeProblem       False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   ContainerRuntimeIsUp            container runtime service is up
+  FrequentContainerdRestart     False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   NoFrequentContainerdRestart     containerd is functioning properly
+  KubeletProblem                False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   KubeletIsUp                     kubelet service is up
+  FrequentKubeletRestart        False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   NoFrequentKubeletRestart        kubelet is functioning properly
+  FilesystemCorruptionProblem   False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   FilesystemIsOK                  Filesystem is healthy
+  FrequentUnregisterNetDevice   False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   NoFrequentUnregisterNetDevice   node is functioning properly
+  FrequentDockerRestart         False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   NoFrequentDockerRestart         docker is functioning properly
+  ReadonlyFilesystem            False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   FilesystemIsNotReadOnly         Filesystem is not read-only
+  KernelDeadlock                False   Tue, 20 Jun 2023 16:40:01 +0000   Fri, 26 May 2023 17:07:42 +0000   KernelHasNoDeadlock             kernel has no deadlock
+  VMEventScheduled              False   Tue, 20 Jun 2023 16:40:01 +0000   Sat, 03 Jun 2023 02:55:56 +0000   NoVMEventScheduled              VM has no scheduled event
+  NetworkUnavailable            False   Fri, 22 Jul 2022 06:37:58 +0000   Fri, 22 Jul 2022 06:37:58 +0000   RouteCreated                    RouteController created a route
+  MemoryPressure                False   Tue, 20 Jun 2023 16:38:31 +0000   Tue, 21 Feb 2023 10:31:50 +0000   KubeletHasSufficientMemory      kubelet has sufficient memory available
+  DiskPressure                  False   Tue, 20 Jun 2023 16:38:31 +0000   Tue, 21 Feb 2023 10:31:50 +0000   KubeletHasNoDiskPressure        kubelet has no disk pressure
+  PIDPressure                   False   Tue, 20 Jun 2023 16:38:31 +0000   Tue, 21 Feb 2023 10:31:50 +0000   KubeletHasSufficientPID         kubelet has sufficient PID available
+  Ready                         True    Tue, 20 Jun 2023 16:38:31 +0000   Tue, 21 Feb 2023 10:31:50 +0000   KubeletReady                    kubelet is posting ready status. AppArmor enabled
+Addresses:
+  InternalIP:  10.224.0.5
+  Hostname:    aks-gpuv100-30084787-vmss000000
+Capacity:
+  cpu:                40
+  ephemeral-storage:  129886128Ki
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             693526380Ki
+  nvidia.com/gpu:     8
+  pods:               110
+Allocatable:
+  cpu:                39500m
+  ephemeral-storage:  119703055367
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             671577964Ki
+  nvidia.com/gpu:     8
+  pods:               110
+System Info:
+  Machine ID:                 d047b63f2d19406599bd8ee8fd141c0e
+  System UUID:                64a78f4a-2f72-485b-a3eb-e6e22e378ce7
+  Boot ID:                    d9e23675-c420-4596-b16d-1ded50c1f2e3
+  Kernel Version:             5.4.0-1103-azure
+  OS Image:                   Ubuntu 18.04.6 LTS
+  Operating System:           linux
+  Architecture:               amd64
+  Container Runtime Version:  containerd://1.5.11+azure-2
+  Kubelet Version:            v1.22.11
+  Kube-Proxy Version:         v1.22.11
+PodCIDR:                      10.244.2.0/24
+PodCIDRs:                     10.244.2.0/24
+ProviderID:                   azure:///subscriptions/3c9c34ff-a227-4052-a21e-005ee892bf7f/resourceGroups/mc_aprg-bl2p-indexservedlmodelserve-prod-bl2p_dlisv100aks_eastus/providers/Microsoft.Compute/virtualMachineScaleSets/aks-gpuv100-30084787-vmss/virtualMachines/0
+Non-terminated Pods:          (8 in total)
+  Namespace                   Name                                                       CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                   ----                                                       ------------  ----------  ---------------  -------------  ---
+  default                     ayservice-gpu-raycluster-d5jl4-worker-small-group-mrh4l    100m (0%)     2 (5%)      1Gi (0%)         2Gi (0%)       15m
+  default                     rayservice-gpu-raycluster-d5jl4-head-5gddb                 100m (0%)     2 (5%)      512Mi (0%)       2Gi (0%)       15m
+  kube-system                 ama-logs-snvrq                                             150m (0%)     1 (2%)      550Mi (0%)       1774Mi (0%)    3d2h
+  kube-system                 azure-ip-masq-agent-jpttq                                  100m (0%)     500m (1%)   50Mi (0%)        250Mi (0%)     3d2h
+  kube-system                 cloud-node-manager-c7c2q                                   50m (0%)      0 (0%)      50Mi (0%)        512Mi (0%)     3d2h
+  kube-system                 csi-azuredisk-node-qlnpg                                   30m (0%)      0 (0%)      60Mi (0%)        400Mi (0%)     3d2h
+  kube-system                 csi-azurefile-node-bdlnr                                   30m (0%)      0 (0%)      60Mi (0%)        600Mi (0%)     3d2h
+  kube-system                 kube-proxy-4ltcm                                           100m (0%)     0 (0%)      0 (0%)           0 (0%)         3d2h
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests     Limits
+  --------           --------     ------
+  cpu                660m (1%)    5500m (13%)
+  memory             2306Mi (0%)  7632Mi (1%)
+  ephemeral-storage  0 (0%)       0 (0%)
+  hugepages-1Gi      0 (0%)       0 (0%)
+  hugepages-2Mi      0 (0%)       0 (0%)
+  nvidia.com/gpu     2            2
+Events:              <none>
